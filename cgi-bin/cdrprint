@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo
+
+muhit=$(env)
+token=$(echo $muhit | awk -v FS='mytoken=' '{print $2}' | awk -v FS=';' '{print $1}')
+
+userID=$(grep -l ${token} /root/callcenter/core/cache/*_token | awk -v FS='_' '{print $1}' | rev | awk -v FS='/' '{print $1}' | rev )
+
+if [ ${#userID} -ne 2 ]; then 
+  /root/callcenter/core/scripts/cdr_print.py $userID 10
+fi
+

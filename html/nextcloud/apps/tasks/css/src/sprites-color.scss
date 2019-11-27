@@ -1,0 +1,48 @@
+.icon-color {
+	background: url('../img/color.svg') no-repeat;
+}
+
+.icon-calendar-due {
+	background-position: 33.333333333333336% 0;
+}
+
+.icon-calendar-overdue {
+	background-position: 66.66666666666667% 50%;
+}
+
+.icon-checkmark-color {
+	background-position: 0 50%;
+}
+
+.icon-clock-due {
+	background-position: 33.333333333333336% 50%;
+}
+
+.icon-clock-overdue {
+	background-position: 66.66666666666667% 0;
+}
+
+.icon-percent-active {
+	background-position: 0 0;
+}
+
+.icon-privacy {
+	background-position: 0 100%;
+}
+
+.icon-tag-active {
+	background-position: 33.333333333333336% 100%;
+}
+
+.icon-task-star-high {
+	background-position: 66.66666666666667% 100%;
+}
+
+.icon-task-star-low {
+	background-position: 100% 0;
+}
+
+.icon-task-star-medium {
+	background-position: 100% 50%;
+}
+

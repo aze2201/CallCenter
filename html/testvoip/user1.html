@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="eng">
+
+<head>
+	<title>MUSHTERI</title>
+	<link rel="stylesheet" href="voip/css/font-awesome.min.css">
+	<link rel="stylesheet" href="voip/css/voip-user.css">
+	<script type="text/javascript" src="voip/js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript" src="voip/js/peer.js"></script>
+	<script type="text/javascript" src="voip/js/cookiehandler.js"></script>
+	<script type="text/javascript">
+
+		navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+		var remotePeerID;
+
+		var peer = new Peer({ key: 'lwjd5qra8257b9', debug: 3});
+		
+		peer.on('open', function() {
+
+			var newid = peer.id;
+
+			console.log(`peer on open: ${peer.id}`);
+			
+			setCookie("myid", newid, 365);
+			$("#log").text("Your Peer ID is: " + newid);
+		});
+		
+		//172.20.10.8
+		//5.189.167.148
+		const ws = new WebSocket('ws://172.20.10.8:9001/');
+		setCookie("mytoken", "YjA3NDY1ODRlYTV", 365);
+
+		ws.onopen = function () { 
+			
+			console.log(`connected: ${getCookie("myid")}`); 
+		};
+
+		ws.onclose = function () { 
+			console.log("disconnected"); 
+		};
+
+		ws.onmessage = function (event) {
+
+			console.log(`message from server: ${event.data}`);
+
+			var pervizstring = event.data;
+			var log = document.getElementById('log');
+			log.innerHTML += "<br>" + pervizstring;
+			var pervizobject = JSON.parse(pervizstring);
+
+			switch (pervizobject.command) {
+
+				case "updatePeerID":
+					updatePeerID(pervizobject.status);
+					break;
+
+				case "startbeeping":
+					startbeeping();
+					break;
+
+				case "stopbeeping":
+					stopbeeping(pervizobject.answerPeerID);
+					break;
+
+				default:
+					notification = "Something went wrong";
+			}
+		};
+
+		$(document).ready(function () {
+
+			$("#end-call").hide();
+
+			setTimeout(function () {
+
+				const jsonString = '{"command":"updatePeerID","token":"' + getCookie("mytoken") + '","peerID":"' + getCookie("myid") + '"}';
+				ws.send(jsonString);
+			}, 1000);
+
+			$("#end-call").on("click", function (){ 
+
+				endCall(); 
+			});
+
+		});
+
+		function updatePeerID(status) {
+
+			if (status != "ok") {
+				console.log(status);
+			}
+		};
+
+		function startCall() {
+
+			console.log(`{"command":"startcall","context":"azeee","token":"' + ${getCookie("mytoken")} + '","callerPeerID":"' + ${getCookie("myid")} + '"}` );
+
+			const jsonString = '{"command":"startcall","context":"azeee","token":"' + getCookie("mytoken") + '","callerPeerID":"' + getCookie("myid") + '"}';
+			ws.send(jsonString);
+		}
+
+		function startbeeping() {
+
+			audio = new Audio('voip/sounds/ringing.mp3');
+			audio.loop = true;
+			$("#start-call").hide();
+			$("#end-call").show();
+			audio.play();
+		}
+
+		function stopbeeping(answerPeerID) {
+
+			audio.pause();
+			audio.currentTime = 0;
+			
+			console.log(`answerPeerID : ${answerPeerID}`);
+
+			var call = peer.call(answerPeerID, window.localStream);
+			step3(call);
+		}
+
+		function endCall() {
+
+			ws.send('{"command":"endcall","token":"'+getCookie("mytoken")+'"}');
+
+			$("#start-call").show();
+			audio.pause();
+			audio.currentTime = 0;
+			$("#end-call").hide();
+		}
+
+		peer.on("error", function (err) {
+			console.log(err.message);
+		});
+		// Click handlers setup
+		$(function () {
+			$("#start-call").click(function () {
+				// Initiate a call!
+				startCall();
+			});
+			$("#end-call").click(function () {
+
+				window.existingCall.close();
+				step2();
+			});
+			// Retry if getUserMedia fails
+			$("#step1-retry").click(function () {
+				$("#step1-error").hide();
+				step1();
+			});
+			// Get things started
+			step1();
+		});
+		function step1() {
+			// Get audio/video stream
+			navigator.getUserMedia({ audio: true, video: false }, function (stream) {
+				// Set your video displays
+				$("#my-video").prop("src", URL.createObjectURL(stream));
+				window.localStream = stream;
+				step2();
+			},
+				function () {
+					$("#step1-error").show();
+				});
+		};
+		function step2() {
+			
+			$("#step1, #step3").hide();
+			$("#step2").show();
+		};
+
+		function step3(call) {
+
+			// Hang up on an existing call if present
+			if (window.existingCall) {
+				window.existingCall.close();
+			}
+			// Wait for stream on the call, then set peer video display
+			call.on("stream", function (stream) {
+				$("#their-video").prop("src", URL.createObjectURL(stream));
+			});
+			// UI stuff
+			window.existingCall = call;
+		};
+
+	</script>
+</head>
+
+<body>
+
+	<div class="pure-u-2-3" id="video-container">
+		<video id="their-video" autoplay></video>
+		<video id="my-video" muted="true" autoplay></video>
+	</div>
+	<p id="log" style="margin: 20px auto;text-align: center;color: #3d5b68;"></p>
+	<div class="voip-panel">
+		<div id="start-call" class="start call">
+			<i class="fa fa-phone" style=""></i>
+		</div>
+		<div id="end-call" class="end call">
+			<i class="fa fa-phone" style=""></i>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>websocketd example</title>
+    <style>
+        #count {
+            font: 20px arial;
+            margin: auto;
+            padding: 0px;
+            text-align: left;
+        }
+    </style>
+
+    <div id='button'></div>
+    
+    <input type="text" name="configname1" id='configname1'>
+    <button type="button" id='xtermBtn'>xterm</button>
+
+    <button type="button" onclick= 'ws.send(1)'> pluma </button>
+    <BR>
+    <BR>
+
+    <div id="count"></div>
+
+</head>
+
+<body>
+
+    <script>
+
+        const ws = new WebSocket('ws://5.189.167.148:8001/');
+
+        ws.onopen = function () {
+
+            document.body.style.backgroundColor = '#cfc';
+        };
+
+        ws.onclose = function () {
+
+            document.body.style.backgroundColor = null;
+        };
+
+        ws.onmessage = function (event) {
+
+            document.getElementById('count').textContent = `State: + ${event.data}`;
+        };
+
+        // function send() {
+
+        //     ws.send(document.getElementById('outMsg').value);
+        // }
+
+        function xtermClick(){
+            
+            const inputVal = document.getElementById('configname1').value;
+            ws.send(inputVal);
+        }
+
+        document.getElementById('xtermBtn').addEventListener('click', xtermClick, false);
+
+    </script>
+
+</body>
+
+</html>

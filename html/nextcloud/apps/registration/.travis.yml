@@ -1,0 +1,86 @@
+sudo: false
+language: php
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+services:
+  - mysql
+  - postgresql
+
+addons:
+  apt:
+    packages:
+    - libxml2-utils
+
+env:
+  global:
+    - PHP_COVERAGE=FALSE
+  matrix:
+    # Nextcloud 14+
+    - CORE_TYPE=nextcloud CORE_BRANCH=master    DB=sqlite
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable15  DB=sqlite
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable14  DB=sqlite
+
+    - CORE_TYPE=nextcloud CORE_BRANCH=master    DB=mysql
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable15  DB=mysql
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable14  DB=mysql
+
+    - CORE_TYPE=nextcloud CORE_BRANCH=master    DB=pgsql
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable15  DB=pgsql
+    - CORE_TYPE=nextcloud CORE_BRANCH=stable14  DB=pgsql
+
+    # ownCloud 10.1+
+    - CORE_TYPE=owncloud CORE_BRANCH=master     DB=sqlite
+    - CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=sqlite
+
+    - CORE_TYPE=owncloud CORE_BRANCH=master     DB=mysql
+    - CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=mysql
+
+    - CORE_TYPE=owncloud CORE_BRANCH=master     DB=pgsql
+    - CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=pgsql
+
+matrix:
+  fast_finish: true
+  exclude:
+    - php: 7.3
+      env: CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=sqlite
+    - php: 7.3
+      env: CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=mysql
+    - php: 7.3
+      env: CORE_TYPE=owncloud CORE_BRANCH=stable10   DB=pgsql
+#    - php: 7.0
+#      env: CORE_TYPE=nextcloud CORE_BRANCH=master    DB=sqlite
+#    - php: 7.0
+#      env: CORE_TYPE=nextcloud CORE_BRANCH=master    DB=mysql
+#    - php: 7.0
+#      env: CORE_TYPE=nextcloud CORE_BRANCH=master    DB=pgsql
+
+  include:
+
+before_install:
+  # XDebug is only needed if we report coverage -> speeds up other builds
+  - if [[ "$PHP_COVERAGE" = "FALSE" ]]; then phpenv config-rm xdebug.ini; fi
+
+install:
+  - . ./tests/scripts/core-download.sh
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/core-database.sh
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/core-setup.sh
+
+script:
+  # Check info.xml schema validity
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/lint-appinfo.sh
+
+  # Check PHP syntax errors
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/lint-php.sh
+
+  # Run app code checker but do not fail, as we have to use private API for now
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/app-check-code.sh || true
+
+  # Run PHP tests
+  - . ${BUILD_APP_MODULE_DIR}/tests/scripts/phpunit.sh

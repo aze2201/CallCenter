@@ -1,0 +1,107 @@
+sudo: false
+dist: trusty
+language: php
+php:
+  - 5.6
+  - 7.1
+  - 7.2
+  - hhvm
+
+env:
+  global:
+    - CORE_BRANCH=stable13
+    - APP_NAME=qownnotesapi
+  matrix:
+    - DB=pgsql
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - env: DB=pgsql CORE_BRANCH=master
+    - env: DB=mysql
+    - env: DB=mysql CORE_BRANCH=master
+  include:
+    - php: 5.6
+      env: DB=sqlite
+    - php: 5.6
+      env: DB=mysql
+    - php: 5.6
+      env: DB=pgsql
+    - php: 5.6
+      env: DB=mysql CORE_BRANCH=stable10
+    - php: 5.6
+      env: DB=mysql CORE_BRANCH=stable11
+    - php: 5.6
+      env: DB=mysql CORE_BRANCH=stable12
+    - php: 5.6
+      env: DB=mysql CORE_BRANCH=stable13
+    - php: 7.2
+      env: DB=mysql CORE_BRANCH=stable14
+    - php: 7.2
+      env: DB=mysql CORE_BRANCH=stable15
+    - php: 7.2
+      env: DB=mysql CORE_BRANCH=stable16
+    - php: 7.2
+      env: DB=mysql CORE_BRANCH=stable17
+#    - php: 7.2
+#      env: DB=mysql CORE_BRANCH=master
+#    - php: 7.2
+#      env: DB=pgsql CORE_BRANCH=master
+  fast_finish: true
+
+before_install:
+#  - sudo apt-get update
+#  - sudo apt-get -y install python3-jinja2 python3-setuptools
+#  - wget https://raw.githubusercontent.com/owncloud/administration/master/travis-ci/before_install.sh
+#  - bash ./before_install.sh $APP_NAME $CORE_BRANCH $DB
+#  - cd ../core
+#  - php occ app:enable $APP_NAME
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  # re-enable once mariadb is added as an option
+#  - if [[ "$DB" == 'mysql' ]]; then sudo apt-get -y install mariadb-server; fi
+  - nvm install 6
+  - npm install -g npm@latest
+  - make
+  # install core
+  - cd ../
+  - git clone https://github.com/nextcloud/server.git --recursive --depth 1 -b $CORE_BRANCH nextcloud
+  - mv $APP_NAME nextcloud/apps/
+
+before_script:
+  - if [[ "$DB" == 'pgsql' ]]; then createuser -U travis -s oc_autotest; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e 'create database oc_autotest;'; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY '';"; fi
+  - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"; fi
+  # fill nextcloud with default configs and enable app
+  - cd nextcloud
+  - mkdir data
+  - ./occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass=''
+  - ./occ app:enable $APP_NAME
+  - ./occ app:check-code $APP_NAME
+  - ./occ background:cron  # enable default cron
+  - php -S localhost:8080 &
+  - cd apps/$APP_NAME
+  #- composer self-update
+  - cp ../../composer.json .
+  - composer require codeclimate/php-test-reporter --dev
+
+script:
+#  - make test
+  - phpunit -c phpunit.coverage.xml --coverage-clover build/logs/clover.xml
+
+after_script:
+  # report to Code Climate via curl
+  # $CODECLIMATE_REPO_TOKEN has to be set as environment variable on travis
+  - ./vendor/bin/test-reporter --stdout > codeclimate.json
+  - "curl -X POST -d @codeclimate.json -H 'Content-Type: application/json' -H 'User-Agent: Code Climate (PHP Test Reporter v0.1.1)' https://codeclimate.com/test_reports"
+
+after_failure:
+  - cat ../../data/nextcloud.log
+
+addons:
+  firefox: "latest"
+
+notifications:
+  email:
+    - $NOTIFICATION_EMAIL

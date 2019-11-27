@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo
+
+muhit=$(cat /root/callcenter/core/cache/req.cookies.txt)
+token=$(echo $muhit | awk -v FS='mytoken=' '{print $2}' | awk -v FS=';' '{print $1}')
+
+userID=$(grep -l ${token} /root/callcenter/core/cache/*_token | awk -v FS='_' '{print $1}' | rev | awk -v FS='/' '{print $1}' | rev )
+
+agentList=$(echo "select name from auth_group where id in (select group_id from auth_user_groups where user_id in (select id from auth_user where username != '${userID}' ));" | sqlite3 /root/callcenter/mysite/project.db)
+
+template="<option value=\"NuMbEr000\">NuMbEr000</option>"
+code=""
+for i in $agentList; 
+do
+    code="$code $(echo ${template}| sed "s/NuMbEr000/$i/g")"
+done
+echo $code

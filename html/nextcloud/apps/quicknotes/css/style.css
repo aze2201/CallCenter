@@ -1,0 +1,230 @@
+#app-content-wrapper {
+    height: 100%;
+}
+
+#new-note {
+    width: 100%;
+    padding: 10px;
+    padding-left: 34px;
+    background-position: 10px center;
+    text-align: left;
+    margin: 0;
+}
+
+#new-note-fixed {
+    z-index: 111; /* navigation menu is 110 ;-) */
+    background-color: rgba(255, 255, 255, .75);
+    padding: 10px;
+    position: relative;
+}
+
+.quicknote {
+    min-height: 150px;
+    width: 250px;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: 0 4px 6px #c1c1c1;
+}
+
+.quicknote:hover {
+   box-shadow: 0px 0px 6px #808080;
+}
+
+.quicknote ul {
+    list-style: initial;
+    margin-left: 20px;
+}
+
+.quicknote ol {
+    margin-left: 20px;
+}
+
+.quicknote blockquote {
+    margin: 0px 0px 0px 10px;
+    border-left: 1px dotted;
+    padding-left: 1ex;
+}
+
+.note-active {
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+}
+
+.save-button #unshare-button {
+    display: none;
+}
+
+#div-content .save-button {
+    float: right;
+    /*padding-right: 8px;*/
+    /*padding-bottom: 5px;*/
+}
+
+#div-content textarea {
+    border: 0;
+    overflow-y: auto;
+    /*resize: none;*/
+    background: inherit;
+}
+
+/* Grid Note */
+
+#div-content {
+    width: 100%;
+}
+
+#div-content .note-title {
+   font-size: 18px;
+   font-weight: bold;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
+
+
+.note-content {
+    margin: 4px;
+    overflow-wrap: break-word;
+}
+
+#div-content .shared-title,
+#div-content .shared-title-owner,
+#div-content .icon-delete-note {
+   float: right;
+   margin: 2px;
+   opacity: 0.5;
+}
+
+.noselect {
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* Internet Explorer/Edge */
+   user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+
+.note-toolbar {
+   float:left;
+   padding-top: 12px;
+}
+
+.circle-toolbar {
+   display:inline-block;
+   width:20px;
+   height:20px;
+   min-width: 20px;
+   min-height: 16px;
+   padding: unset;
+   border-radius:10px;
+   border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.ciclle-toolbar:hover {
+   color: #ccc;
+   text-decoration:none;
+   background:#333;
+}
+
+.any-color {
+  background-color: transparent;
+}
+
+/* Isotope Grid */
+
+.notes-grid {
+    margin: 0 auto;
+    padding: 15px;
+}
+.note-grid-item {
+  margin-bottom: 10px;
+}
+
+/* Modal Note */
+
+/* The Modal (background) */
+
+.modal-note-background {
+    position: fixed; /* Stay in place */
+    z-index: 200; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.hide-delete-icon,
+.hide-modal-note {
+    display: none;
+}
+.show-delete-icon,
+.show-modal-note {
+    display: block;
+}
+
+div[contenteditable="true"] {
+   margin: 0px;
+   padding: 0px;
+   min-height: auto;
+}
+
+#title-editable:active, #title-editable:hover, #title-editable:focus,
+#content-editable:active, #content-editable:hover, #content-editable:focus {
+  background-color: transparent !important;
+}
+
+#content-editable {
+    width: 100%;
+    padding: 4px;
+    min-height: 50px;
+    word-wrap: break-word;
+    background: none;
+    color: unset;
+    border: none;
+}
+
+#title-editable {
+    width: 100%;
+    background: none;
+    color: unset;
+    border: none;
+}
+
+.note-options {
+    bottom: 0;
+    /*padding: 5px;*/
+}
+
+#note-share-options {
+    display: none;
+    padding-bottom: 5px;
+}
+
+.selected-share:hover, .unselected-share:hover, .selected-share span:hover, .unselected-share span:hover {
+    cursor: pointer;
+}
+
+.selected-share, .unselected-share {
+    padding-left: 5px;
+}
+
+.note-share-select {
+    width: 100%;
+    opacity: 0.5;
+}
+
+/* Modal Content */
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    width: 60%;
+    height: auto;
+    min-height: unset;
+}

@@ -1,0 +1,174 @@
+/**
+ * Nextcloud - Dashboard app
+ *
+ * This file is licensed under the Affero General Public License version 3 or
+ * later. See the COPYING file.
+ *
+ * @author Maxence Lange <maxence@artificial-owl.com>
+ * @copyright 2018, Maxence Lange <maxence@artificial-owl.com>
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+
+#dashboard-nowidget {
+  display: none;
+}
+
+.dashboard-newwidget {
+  border: 1px dashed #000;
+  border-radius: 3px;
+  position: fixed;
+  right: 27px;
+  bottom: 17px;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  padding: 40px 60px 40px 60px;
+  opacity: 0;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.icon-dashboard {
+  background-image: url('../img/dashboard-dark.svg');
+}
+
+.icon-widget {
+  background-image: url('../img/widget.svg');
+}
+
+/* WIDGET HEADER */
+.widget-header {
+  background-color: var(--color-main-background);
+  color: var(--color-main-text);
+  height: 44px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  border-top-right-radius: var(--border-radius);
+  border-top-left-radius: var(--border-radius);
+  border-bottom: 1px solid var(--color-border);
+  h2 {
+    margin-bottom: 0;
+  }
+  .widget-header-icon {
+    width: 44px;
+    height: 44px;
+    background-size: 22px;
+    opacity: 0.65;
+  }
+  .widget-right-icon {
+    margin-left: auto;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    opacity: 0;
+  }
+  .popovermenu {
+    top: 44px;
+  }
+}
+
+.popovermenu {
+  z-index: 999;
+}
+
+/* WIDGET LISTS */
+.widget-list-row {
+  height: 50px;
+  margin-top: 15px;
+}
+
+.widget-list-icon {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  margin: 10px;
+}
+
+.widget-list-text {
+  position: absolute;
+  left: 80px;
+}
+
+.widget-list-name {
+  font-size: 14px;
+  color: var(--color-text-light);
+}
+
+.widget-list-desc {
+  font-size: 12px;
+  color: var(--color-text-lighter);
+  margin-right: 10px;
+}
+
+/* GRID */
+.grid-stack {
+  margin-top: 10px
+}
+
+.grid-stack-item-content {
+  color: #2c3e50;
+  text-align: center;
+  filter: drop-shadow(0 1px 3px var(--color-box-shadow));
+  border-radius: var(--border-radius);
+  z-index: 1 !important;
+}
+
+.ui-state-disabled {
+  opacity: 1 !important;
+  filter: Alpha(Opacity=100) !important;
+  -webkit-transition: background-color 200ms linear;
+  -ms-transition: background-color 200ms linear;
+  transition: background-color 200ms linear;
+}
+
+/* GRID STACK PLACEHOLDER */
+.grid-stack .grid-stack-placeholder > .placeholder-content {
+  border-color: var(--color-background-darker);
+}
+
+/* WIDGET BACK */
+.back {
+  background: var(--color-background-darker);
+}
+
+/* WIDGET CONTENT */
+.widget-content {
+  height: calc(100% - 44px);
+  overflow: hidden !important;
+}
+
+.grid-stack > .grid-stack-item > .grid-stack-item-content {
+  margin: 0 10px;
+  position: unset;
+  top: unset;
+  left: unset;
+  right: unset;
+  bottom: unset;
+  width: unset;
+  z-index: 1 !important;
+  overflow-x: unset;
+  overflow-y: unset;
+  height: inherit;
+  background-color: var(--color-main-background);
+  color: var(--color-main-text);
+}
+
+.ui-resizable-handle-hidden {
+  z-index: 0 !important;
+}

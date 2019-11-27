@@ -1,0 +1,28 @@
+{ "translations": {
+    "Edit comment" : "แก้ไขความคิดเห็น",
+    "Delete comment" : "ลบความคิดเห็น",
+    "New comment …" : "ความคิดเห็นใหม่...",
+    "Post" : "โพสต์",
+    "Cancel" : "ยกเลิก",
+    "[Deleted user]" : "[ลบผู้ใช้งาน]",
+    "Comments" : "ความคิดเห็น",
+    "More comments …" : "ความคิดเห็นอื่นๆ...",
+    "Save" : "บันทึก",
+    "_%n comment_::_%n comments_" : ["1 %n ความคิดเห็น"],
+    "Announcing…" : "กำลังประกาศ...",
+    "Announced!" : "ประกาศแล้ว!",
+    "Delete" : "ลบ",
+    "Remove notifications" : "ลบการแจ้งเตือน",
+    "Groups" : "กลุ่ม",
+    "Announcements" : "ประกาศ",
+    "The subject is too long or empty" : "หัวข้อยาวเกินไปหรือยังไม่ได้เขียน",
+    "No Announcements" : "ไม่มีประกาศ",
+    "There are currently no announcements…" : "ขณะนี้ยังไม่มีประกาศ...",
+    "Add announcement" : "เพิ่มประกาศ",
+    "Subject…" : "หัวข้อ...",
+    "Your announcement…" : "ประกาศของคุณ...",
+    "Announce" : "ประกาศ",
+    "Announcement does not exist anymore" : "ไม่มีประกาศ",
+    "%1$s announced “%2$s”" : "%1$s ได้ประกาศว่า “%2$s”"
+},"pluralForm" :"nplurals=1; plural=0;"
+}

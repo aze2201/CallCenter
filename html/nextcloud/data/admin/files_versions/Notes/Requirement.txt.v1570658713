@@ -1,0 +1,20 @@
+Requirement
+
+1. Home page:
+	change string and logo to buludtech.com
+	remove all and keep "OVPN Profile" and change name to "Connect by country"
+2. Second page.
+	Menu:
+		invisible Import Profile,Proxies, Settings
+		Change Help URL to vpn.buludtech.com
+	Log:
+		Make invisible
+	Add (+) 
+		Make invisible
+3.	Main page
+		download profile from provided sftp vpn.buludtech.com in each lunch
+		set Title by Filename
+		invisble edit. remove OpenVPN
+
+
+		

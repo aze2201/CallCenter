@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>dashboardcharts</id>
+    <name>DashboardCharts</name>
+    <summary>Dashboard HighCharts Reports.</summary>
+    <description><![CDATA[Flexible Dashboard Chart widgets for the Dashboard v6. Dashboard Highcharts.js Reports.]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="mark@partlettconsulting.com.au" >Mark Partlett</author>
+    <namespace>DashboardCharts</namespace>
+    <category>tools</category>
+    <bugs>https://github.com/markpartlett/dashboardcharts/issues</bugs>
+    <dependencies>
+        <nextcloud min-version="15" max-version="18"/>
+    </dependencies>
+		<settings>
+		<personal>OCA\DashboardCharts\Settings\Personal</personal>
+		<personal-section>OCA\DashboardCharts\Settings\Section</personal-section>
+	</settings>
+	<dashboard>
+		<widget>OCA\DashboardCharts\Widgets\HChart1Widget</widget>
+		<widget>OCA\DashboardCharts\Widgets\HChart2Widget</widget>
+		<widget>OCA\DashboardCharts\Widgets\HChart3Widget</widget>
+		<widget>OCA\DashboardCharts\Widgets\HChart4Widget</widget>
+		<widget>OCA\DashboardCharts\Widgets\HChart5Widget</widget>
+	</dashboard>
+</info>

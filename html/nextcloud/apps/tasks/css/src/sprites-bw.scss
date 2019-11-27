@@ -1,0 +1,101 @@
+
+@include icon-black-white('bw', 'tasks', 1, false);
+
+.icon-add {
+	background-position: 25% 0;
+}
+
+.icon-all {
+	background-position: 0 75%;
+}
+
+.icon-alphabetically {
+	background-position: 0 25%;
+}
+
+.icon-calendar {
+	background-position: 25% 25%;
+}
+
+.icon-checkmark {
+	background-position: 50% 0;
+}
+
+.icon-clock {
+	background-position: 50% 25%;
+}
+
+.icon-close {
+	background-position: 0 50%;
+}
+
+.icon-current {
+	background-position: 25% 50%;
+}
+
+.icon-hide {
+	background-position: 50% 50%;
+}
+
+.icon-list {
+	background-position: 75% 0;
+}
+
+.icon-manual {
+	background-position: 75% 25%;
+}
+
+.icon-note {
+	background-position: 75% 50%;
+}
+
+.icon-percent {
+	background-position: 0 0;
+}
+
+.icon-random {
+	background-position: 25% 75%;
+}
+
+.icon-settings {
+	background-position: 50% 75%;
+}
+
+.icon-sort-down {
+	background-position: 75% 75%;
+}
+
+.icon-sort-up {
+	background-position: 100% 0;
+}
+
+.icon-subtasks-hidden,
+.icon-subtasks-hidden\:regular {
+	background-position: 100% 25%;
+}
+
+.icon-subtasks-hidden:hover,
+.icon-subtasks-hidden\:hover {
+	background-position: 100% 50%;
+}
+
+.icon-subtasks-visible {
+	background-position: 100% 75%;
+}
+
+.icon-tag {
+	background-position: 0 100%;
+}
+
+.icon-task-star {
+	background-position: 25% 100%;
+}
+
+.icon-toggle {
+	background-position: 50% 100%;
+}
+
+.icon-trash {
+	background-position: 75% 100%;
+}
+

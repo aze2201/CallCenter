@@ -1,0 +1,1 @@
+insert into session (session_id,start_date,context,caller_peer_id,caller_token,call_status) values ('6y3vribdtei00000YjA3NDY1ODRlYTV','2019-11-25 22:45:59','agent','6y3vribdtei00000','YjA3NDY1ODRlYTV','S'); 

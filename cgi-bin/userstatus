@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "Content-type: text/html"
+echo
+
+cacheDir="/root/callcenter/core/cache"
+
+muhit=$cacheDir/req.cookies.txt
+token=$(cat ${muhit} | awk -v FS='mytoken=' '{print $2}' | awk -v FS=':' '{print $1}')
+
+userID=$(grep -l ${token} ${cacheDir}/*_token | awk -v FS='_' '{print $1}' | rev | awk -v FS='/' '{print $1}' | rev )
+
+statusTemplate="<table><tr>"
+
+#if [ "$userID" == "admin" ]; then
+  csrfUsers=$(ls ${cacheDir}/*.csrf)
+  for csrfFile in $csrfUsers ; do
+        csrfFile=$(echo ${csrfFile}| rev | awk -v FS='/' '{print $1}'| rev)
+    user=$(echo ${csrfFile}| awk -v FS='.' '{print $1}' )
+    token=$(cat ${cacheDir}/${csrfFile}| awk -v FS='|' '{print $2}' )
+    status=$(cat ${cacheDir}/${token}_status | awk -v FS='|' '{print $2}')
+    if [ "$status" == "free" ]; then
+      statusTemplate=$(echo "${statusTemplate} <td>${user} <span style=\"float:right;color:green;\"><i class=\"fa fa-circle\"></i></span></td> </tr>" )
+    elif [ "$status" == "calling" ]  || [ "$status" == "busy" ] ; then
+      statusTemplate=$(echo "${statusTemplate} <td>${user} <span style=\"float:right;color:red;\"><i class=\"fa fa-circle\"></i></span></td> </tr>" )
+    else
+      statusTemplate=$(echo "${statusTemplate} <td>${user} <span style=\"float:right;color:grey;\"><i class=\"fa fa-circle\"></i></span></td> </tr>" )
+    fi
+  done
+  statusTemplate=$(echo "${statusTemplate} </table>")
+#fi
+echo $statusTemplate

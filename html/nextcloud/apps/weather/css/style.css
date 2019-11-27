@@ -1,0 +1,228 @@
+#city-list-left {
+	width: 250px;
+	height: 100%;
+	float: left;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+	background-color: #fff;
+	padding-bottom: 44px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#city-list-left > ul {
+	position: relative;
+	height: 100%;
+	overflow: auto;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+}
+#city-list-left li {
+	position: relative;
+	width: 100%;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+}
+
+#city-list-left li:hover > a,
+#city-list-left li:hover,
+#city-list-left .selected,
+#city-list-left .selected a {
+	background-color: #ccc;
+}
+
+#city-list-left li > a {
+	line-height: 44px;
+	padding: 0 12px;
+	display: block;
+	overflow: hidden;
+	-moz-box-sizing: border-box; box-sizing: border-box;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #333;
+}
+
+#city-list-left li .icon-delete {
+	width: 30px;
+	height: 18px;
+	top: 0;
+	right: 0;
+	position: absolute;
+	cursor: pointer;
+	height: 100%;
+	display: none;
+}
+
+#city-list-left li:hover .icon-delete {
+	display: inline;
+}
+
+#city-right {
+	padding: 45px;
+	height: 100%;
+	overflow-y: hidden;
+	overflow-x: auto;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 250px;
+	background: black no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	color: #EEE;
+}
+
+#city-right .city-name {
+	font-size: 5em;
+	line-height: 1em;
+}
+
+
+#city-right .city-current-temp {
+	font-size: 3em;
+	line-height: 1em;
+}
+
+#city-right .city-current-pressure, #city-right .city-current-wind,
+	#city-right .city-current-humidity, #city-right .city-current-weather,
+	#city-right .city-current-sunrise {
+	font-size: 2em;
+	line-height: 1em;
+}
+
+#city-right tr:hover {
+	background-color: rgba(100, 100, 100, 0.5);
+}
+
+.city-list hr {
+	border: 0;
+	height: 1px;
+	background: #BBB;
+	background-image: linear-gradient(to right, #CCC, #BBB, #CCC);
+}
+
+#create-city {
+        padding: 10px;
+        background-color: #EEE;
+        border: 1px solid #DDD;
+}
+
+#create-city h1 {
+        color: #444;
+}
+
+#create-city h1 {
+        text-align: center;
+        font-weight: bold;
+}
+
+#create-city h2, #city-forecast-panel th {
+        font-weight: bold;
+}
+
+.city-form-error {
+	color: red;
+}
+
+.city-load-error {
+	color: #FF3333;
+	position: absolute;
+        text-align: center;
+        top: 40%;
+        width: 100%;
+        padding: 20px;
+	font-size: 1.5em;
+}
+
+.city-load-error a {
+	color: #FF3333;
+        text-align: center;
+}
+
+#city-weather-panel, #city-forecast-panel {
+	border-radius: 3px;
+	padding: 30px;
+	padding-top: 20px;
+	background-color: rgba(50, 50, 50, 0.5);
+	display: inline-block;
+}
+
+#city-forecast-panel {
+	float: right;
+	font-size: 1.3em;
+}
+
+#city-forecast-panel td, #city-forecast-panel th {
+	padding: 10px;
+}
+
+.home-icon:hover {
+	cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1620px) {
+#city-right .city-name {
+	font-size: 5em;
+}
+
+#city-right .city-current-pressure, #city-right .city-current-wind,
+#city-right .city-current-weather, #city-right .city-current-humidity,
+#city-right .city-current-sunrise {
+	font-size: 3em;
+}
+#city-forecast-panel {
+	font-size: 1.2em;
+}
+}
+
+@media (max-width: 1560px) {
+#city-right .city-name {
+	font-size: 4em;
+}
+
+#city-right .city-current-temp {
+	font-size: 3.5em;
+}
+
+#city-right .city-current-pressure, #city-right .city-current-wind,
+#city-right .city-current-weather, #city-right .city-current-humidity,
+#city-right .city-current-sunrise {
+	font-size: 2.2em;
+}
+#city-forecast-panel {
+	font-size: 1.2em;
+}
+}
+
+@media (max-width: 1400px) {
+#city-forecast-panel {
+	font-size: 1em;
+}
+}
+@media (max-width: 1350px) {
+#city-right .city-name {
+	font-size: 3em;
+}
+
+#city-right .city-current-temp {
+	font-size: 2.5em;
+}
+
+#city-right .city-current-pressure, #city-right .city-current-wind,
+#city-right .city-current-weather, #city-right .city-current-humidity,
+#city-right .city-current-sunrise {
+	font-size: 1.6em;
+}
+}
+
+#app {
+	width: 100%;
+}
+
+#app-settings-content h2 {
+	font-weight: bold;
+}

@@ -1,0 +1,40 @@
+task:
+1. check NORMAL and LOGGED user with length of token. If not same with Logged user then reject for normal API's // DONE
+2. play music from url which is send by backend (me)
+3. Add {"token":<token id>,"command":"endcall"} to client for EndCall function (this need for CDR, otherwise task need to change status)
+4. Add {"token":<token id>,"command":"reject",callerPeerID":<callerPeerID>} to Reject function on client side
+5. Call forward.
+       Browser decide to forward call to different team.
+       Browser will send EndCall to signalling server
+       Browser will disconnect call
+       Signalling server will send ExecCommand for start call to new ID
+       All flow will start again for new team.
+
+6. CDR generation by signalling center (be carefull for escalate issues)
+7. Exec function should be read for answer auto
+8. Music folder
+
+
+
+core
+
+1. call transfer *azeee
+   check status call
+   check permission for * (in call)
+   call forward to new team
+2. working hour
+3. IVR config (optional)
+
+
+CRM
+
+1. CDR visualation
+2. Basic statistics with dashboards
+3. Email notifications
+4. Call history
+5. IVR configuration
+6. Working hour configuration
+7. USER delete/add configuration
+8. Escalated issue
+
+https://www.youtube.com/watch?v=l65Go_x6Rk4

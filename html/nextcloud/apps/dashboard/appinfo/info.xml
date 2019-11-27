@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>dashboard</id>
+	<name>Dashboard</name>
+	<summary>Dashboard app for Nextcloud</summary>
+	<description>
+		<![CDATA[The Dashboard app allows users to monitor their data through sub-elements called Widgets.
+		Widgets are imported from other apps and can be added, removed, moved and resized
+]]>
+	</description>
+	<version>6.0.0</version>
+	<licence>agpl</licence>
+	<author>Maxence Lange</author>
+	<namespace>Dashboard</namespace>
+	<category>tools</category>
+	<website>https://github.com/nextcloud/dashboard</website>
+	<bugs>https://github.com/nextcloud/dashboard/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/dashboard.git</repository>
+	<screenshot>https://raw.githubusercontent.com/nextcloud/dashboard/master/screenshots/v4.0.5.png</screenshot>
+	<dependencies>
+		<php min-version="7"/>
+		<nextcloud min-version="15" max-version="16"/>
+	</dependencies>
+
+	<commands>
+		<command>OCA\Dashboard\Command\Push</command>
+	</commands>
+
+	<dashboard>
+		<widget>OCA\Dashboard\Widgets\ClockWidget</widget>
+		<widget>OCA\Dashboard\Widgets\DiskSpaceWidget</widget>
+		<widget>OCA\Dashboard\Widgets\FortunesWidget</widget>
+	</dashboard>
+
+</info>

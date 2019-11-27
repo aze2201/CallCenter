@@ -1,0 +1,65 @@
+#!/usr/bin/python2.7
+# -*- coding: utf-8 -*-
+
+import cgi, cgitb, os, sys
+import glob
+from string import *
+
+
+UPLOAD_DIR = '/var/www/callcenter/core/pictures'
+CACHEDIR = '/var/www/callcenter/core/cache'
+
+
+def save_uploaded_file():
+    print 'Content-Type: text/html; charset=UTF-8'
+    print
+    print '''
+<html>
+<head>
+  <title>Upload File</title>
+</head>
+<body>
+'''
+
+    form = cgi.FieldStorage()
+    if not form.has_key('file'):
+        print '<h1>Not found parameter: file</h1>'
+        return
+
+    form_file = form['file']
+    if not form_file.file:
+        print '<h1>Not found parameter: file</h1>'
+        return
+
+    if not form_file.filename:
+        print '<h1>Not found parameter: file</h1>'
+        return
+    if os.environ.has_key('HTTP_COOKIE'):
+        for cookie in map(strip, split(os.environ['HTTP_COOKIE'], ';')):
+            (key, value ) = split(cookie, '=');
+            if key == "csrftoken":
+                token = value
+                fileList=glob.glob(CACHEDIR+'/*_token')
+                for i in fileList:
+                    if token in open(i).read():
+                        fileName=os.path.basename(i.split('_')[0]+'.jpg')
+    uploaded_file_path = os.path.join(UPLOAD_DIR, os.path.basename(fileName))
+    #uploaded_file_path = os.path.join(UPLOAD_DIR, os.path.basename(form_file.filename))
+    with file(uploaded_file_path, 'wb') as fout:
+        while True:
+            chunk = form_file.file.read(100000)
+            if not chunk:
+                break
+            fout.write (chunk)
+    #os.system('env > /var/www/callcenter/core/cache/upload.tmp')
+    print '<h1>Completed file upload</h1>'
+    print '''
+<hr>
+<a href="https://voip.buludtech.com/en/agents">Back to upload page</a>
+</body>
+</html>
+'''
+
+
+cgitb.enable()
+save_uploaded_file()

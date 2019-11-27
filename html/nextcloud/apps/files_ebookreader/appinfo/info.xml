@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<info>
+    <id>files_ebookreader</id>
+    <name>Ebook reader</name>
+    <summary>An ebook reader for Nextcloud</summary>
+    <description><![CDATA[This application integrates the Epub.js library into Nextcloud. Using this
+application users can view their ebook files online without the need to
+download the file.
+
+When this application is enabled publicly shared ebook documents will also
+get shown in the ebook reader instead of only showing a single static
+snapshot of the document. The ebook reader requires a modern browser and
+will not work with Microsoft® Internet Explorer® versions below 9.
+
+Epub.js is a JavaScript library developed by Futurepress, you can learn more
+about the Epub.js project at [https://github.com/futurepress/epub.js/](https://github.com/futurepress/epub.js/)]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author>Jonas Heinrich</author>
+    <namespace>Files_EbookReader</namespace>
+    <category>files</category>
+    <category>multimedia</category>
+    <bugs>https://git.project-insanity.org/onny/web-nextcloud-app-files_ebookreader</bugs>
+    <dependencies>
+		<nextcloud min-version="15" max-version="16" />
+    </dependencies>
+</info>

@@ -1,0 +1,77 @@
+#!/usr/bin/python3
+import sqlite3
+import cgi, cgitb
+import sys
+
+DATABASE='/root/callcenter/core/cdr.database'
+limit=100
+
+
+conn=sqlite3.connect(DATABASE ,check_same_thread=False,isolation_level=None)
+form = cgi.FieldStorage() 
+
+
+
+StartDate = form.getvalue('start')
+EndDate  = form.getvalue('end')
+
+
+
+def dict_factory(cursor, row):
+ d = {}
+ for idx, col in enumerate(cursor.description):
+  d[col[0]] = str(row[idx]).encode('utf8')
+ return d
+
+conn.row_factory = dict_factory
+SQL="select context,start_date,end_date,called_id,geoplugin_request,geoplugin_city,call_status from session where date(start_date) between '"+str(StartDate)+"' and '"+str(EndDate)+"' order by start_date desc limit "+str(limit)
+  
+dataresult = (conn.execute(SQL).fetchall())
+datahtml="""
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<table>
+  <tr>
+    <th>company</th>
+    <th>Call status</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Called from</th>
+    <th>Called IP address</th>
+    <th>User</th>
+  </tr>
+"""
+for rows in dataresult:
+    datahtml=datahtml+"<tr>"
+    datahtml=datahtml+"<td>"+str(rows['context'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['call_status'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['start_date'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['end_date'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['geoplugin_city'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['geoplugin_request'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"<td>"+str(rows['called_id'].decode("utf-8"))+"</td>"
+    datahtml=datahtml+"</tr>"
+
+datahtml=datahtml+"</table></body>"
+print (datahtml)
+

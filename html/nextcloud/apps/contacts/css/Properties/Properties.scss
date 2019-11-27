@@ -1,0 +1,190 @@
+/**
+ * @copyright Copyright (c) 2018 John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @author John Molakvoæ <skjnldsv@protonmail.com>
+ *
+ * @license GNU AGPL version 3 or any later version
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+$property-label-min-width: 60px;
+$property-label-max-width: 2 * $property-label-min-width;
+$property-value-max-width: 250px;
+
+.property {
+	@include generate-grid-span(1);
+	position: relative;
+	padding-right: 44px; // actions menu / button
+	// we need this to keep the alignment of the ext and delete/action button
+	// The flex grow will never go over those values. Therefore we can set
+	// the max width and keep the right alignment
+	max-width: $property-label-max-width + $property-value-max-width + 44px;
+	justify-self: center;
+	width: 100%;
+
+	&--last {
+		margin-bottom: $grid-height-unit;
+	}
+	// no delete/action icon on addressbook selector
+	&--addressbooks &__actions {
+		display: none !important;
+	}
+
+	// property row
+	&__row {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
+	// property label or multiselect within row
+	&__label,
+	&__label.multiselect {
+		margin: $grid-input-margin 5px $grid-input-margin 0 !important; // override multiselect
+		flex: 1 0; // min width is 60px, let's grow until 120px
+		height: $grid-input-height-with-margin;
+		width: $property-label-min-width;
+		min-width: $property-label-min-width !important; // override multiselect
+		max-width: $property-label-max-width;
+
+		user-select: none;
+		background-size: 16px;
+
+		&,
+		.multiselect__input {
+			&::placeholder {
+				text-align: right;
+			}
+			+ .multiselect__single {
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+
+		&:not(.multiselect) {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			overflow-x: hidden;
+		}
+
+		// mouse feedback
+		.multiselect__tags {
+			opacity: .7;
+		}
+		&:hover,
+		&:focus,
+		&:active {
+			.multiselect__tags {
+				border-color: var(--color-border-dark);
+				opacity: 1;
+			}
+		}
+
+		// read-only mode
+		&.multiselect--disabled {
+			&, .multiselect__single {
+				&, &:hover, &:focus &:active {
+					background-color: var(--color-main-background) !important;
+					border-color: transparent !important;
+				}
+			}
+		}
+	}
+
+	&__label.multiselect {
+		.multiselect__tags {
+			border: none !important; // override multiselect
+			.multiselect__single {
+				background-repeat: no-repeat;
+				background-position: center right 4px;
+				padding-right: 24px;
+			}
+		}
+		.multiselect__content-wrapper {
+			min-width: $property-label-max-width; // improve readability on narrow screens
+			width: auto !important; // grow bigger if content is bigger than the original 100%
+			right: 0; // align right
+		}
+		@media only screen and (max-width: 768px) {
+			// align left of screen on narrow views
+			.multiselect__content-wrapper {
+				left: 0;
+				right: auto;
+			}
+		}
+	}
+
+	// Property value within row, after label
+	&__value {
+		flex: 1 1 $property-value-max-width;
+		max-width: $property-value-max-width;
+
+		textarea& {
+			align-self: flex-start;
+			min-height: 2 * $grid-height-unit - 2*$grid-input-margin;
+			max-height: 5 * $grid-height-unit - 2*$grid-input-margin;
+		}
+
+		// read-only mode
+		&:read-only {
+			border-color: var(--color-border-dark);
+		}
+		input&--with-ext {
+			// ext icon width + 8px padding
+			padding-right: 24px;
+			&:hover,
+			&:focus,
+			&:active {
+				~ .property__ext {
+					opacity: .5;
+				}
+			}
+		}
+	}
+
+	// show ext button on full row hover
+	&:hover &__ext{
+		opacity: .5;
+	}
+
+	// External link (tel, mailto, http, ftp...)
+	&__ext {
+		position: absolute;
+		// 8px padding
+		right: 8px;
+		opacity: 0;
+		&:hover,
+		&:focus,
+		&:active {
+			opacity: .7;
+		}
+	}
+
+	// Delete property button + actions
+	&__actions {
+		position: absolute !important;
+		top: 0;
+		left: 100%;
+		margin: -2px 2px; // align with line because of the 44x44px size
+		border: 0;
+		background-color: transparent;
+		z-index: 10;
+	}
+	.property__value {
+		margin-right: 0;
+	}
+}

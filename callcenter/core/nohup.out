@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "wsdump.py", line 29, in <module>
+    OPCODE_DATA = (websocket.ABNF.OPCODE_TEXT, websocket.ABNF.OPCODE_BINARY)
+AttributeError: module 'websocket' has no attribute 'ABNF'
