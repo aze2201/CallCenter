@@ -6,4 +6,4 @@
 4.  Shell script get data from Django DB (agent USERS of Support Group) and sends data to Caller.
 5.  Callers get PeerJS ID and call to Agents over PeerJS ID.
 
-
+![Alt text](https://github.com/aze2201/CallCenter/blob/master/CallCenterPIPE.png?raw=true)
