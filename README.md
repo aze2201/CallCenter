@@ -1,11 +1,9 @@
 # CallCenter
 
-CMS:
-  1. JS verify domain
-  2. Design client page
-  3. Add new page for download
-  4. Develop token authentication for client JS.
+1.  Django CMS provide WEB Pages (Agent page and web call page)
+2.  All web pages connect to Web Socket server (python)
+3.  Python Websocket server sends data over JSON format to local Shell script
+4.  Shell script get data from Django DB (agent USERS of Support Group) and sends data to Caller.
+5.  Callers get PeerJS ID and call to Agents over PeerJS ID.
 
-Report
-  1. Need to install superset and create one username voipadmin
-  2. Inject code of CMS and create cookie for superset
+
